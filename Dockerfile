@@ -6,13 +6,16 @@ RUN apt-get update && \
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
     export PATH="$HOME/.cargo/bin:$PATH"
 
-# 필요한 패키지 설치
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-
-# Streamlit 앱 복사
-COPY . /app
+# 작업 디렉토리 설정
 WORKDIR /app
 
-# 앱 실행
+# 필요 패키지 설치
+COPY requirements.txt ./
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
+
+# 애플리케이션 파일 복사
+COPY . .
+
+# Streamlit 애플리케이션 실행
 CMD ["streamlit", "run", "your_app.py"]

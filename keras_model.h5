@@ -1,0 +1,13 @@
+import h5py
+
+# 모델 파일 경로
+model_file_path = "keras_model.h5"
+
+# h5py를 사용하여 파일을 열고 메타데이터를 확인합니다.
+with h5py.File(model_file_path, 'r') as f:
+    # 메타데이터에서 버전 정보를 찾습니다.
+    keras_version = f.attrs.get('keras_version')
+    tensorflow_version = f.attrs.get('tensorflow_version')
+
+print("Keras version:", keras_version.encode('utf-8') if keras_version else "Not found")
+print("TensorFlow version:", tensorflow_version.decode('utf-8') if tensorflow_version else "Not found")
